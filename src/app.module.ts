@@ -12,7 +12,7 @@ import { PrismaModule } from "./prisma/prisma.module";
     BookmarkModule,
     PrismaModule,
     ConfigModule.forRoot({
-      envFilePath: ".env",
+      envFilePath: [".env", ".env.test"],
     }),
   ],
 })
