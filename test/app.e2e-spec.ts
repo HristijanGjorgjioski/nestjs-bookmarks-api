@@ -37,6 +37,49 @@ describe("App e2e", () => {
       password: "password",
     };
 
+    describe("Invalid email", () => {
+      it("should not signup", () => {
+        return pactum
+          .spec()
+          .post("/auth/signup")
+          .withBody({
+            password: "123",
+          })
+          .expectStatus(400);
+      });
+    });
+
+    describe("Empty body", () => {
+      it("should not signup", () => {
+        return pactum.spec().post("/auth/signup").expectStatus(400);
+      });
+    });
+
+    describe("Invalid password", () => {
+      it("should not signup", () => {
+        return pactum
+          .spec()
+          .post("/auth/signup")
+          .withBody({
+            email: "test@example.com",
+          })
+          .expectStatus(400);
+      });
+    });
+
+    describe("Invalid credentials", () => {
+      it("should not login", () => {
+        return pactum
+          .spec()
+          .post("/auth/login")
+          .withBody({
+            email: "invalid@gmail.com",
+            password: "password",
+          })
+          .expectStatus(403);
+      });
+    });
+
     describe("Signup", () => {
       it("should signup", () => {
         return pactum
@@ -44,6 +87,36 @@ describe("App e2e", () => {
           .post("/auth/signup")
           .withBody(dto)
           .expectStatus(201);
+      });
+    });
+
+    describe("Invalid email", () => {
+      it("should not login", () => {
+        return pactum
+          .spec()
+          .post("/auth/login")
+          .withBody({
+            password: "123",
+          })
+          .expectStatus(400);
+      });
+    });
+
+    describe("Empty body", () => {
+      it("should not login", () => {
+        return pactum.spec().post("/auth/login").expectStatus(400);
+      });
+    });
+
+    describe("Invalid password", () => {
+      it("should not login", () => {
+        return pactum
+          .spec()
+          .post("/auth/login")
+          .withBody({
+            email: "test@example.com",
+          })
+          .expectStatus(400);
       });
     });
 
